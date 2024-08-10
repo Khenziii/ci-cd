@@ -26,7 +26,7 @@ const execute_command = (command: string) => {
     };
 }
 
-export class App {
+export class Deployment {
     commands_list: string[];
     route_name: string;
     fail_fast: boolean;
