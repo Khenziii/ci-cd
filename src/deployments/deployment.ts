@@ -1,4 +1,5 @@
 import { exec } from "child_process";
+import { DeploymentError } from "./errors.js";
 
 const execute_command = (command: string) => {
     let command_stdout: string | undefined;
@@ -37,7 +38,7 @@ export class Deployment {
         this.fail_fast = fail_fast ?? true;
     }
 
-    run() {
+    public run() {
         console.log("Running the commands..");
 
         for (const command of this.commands_list) {
@@ -45,14 +46,15 @@ export class Deployment {
 
             if (!successful && this.fail_fast) {
                 console.log("Aborting..");
-                break;
+                throw new DeploymentError("Failed to deploy!");
             }
+
+            console.log(`$ ${command}`);
 
             if (!command_stdout) {
                 continue;
             }
 
-            console.log(`$ ${command}`);
             console.log(command_stdout);
         };
 

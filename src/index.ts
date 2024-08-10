@@ -1,18 +1,8 @@
-import express from "express";
-import { envVariables } from "./env-variables.ts";
+import { envVariables } from "./env-variables.js";
+import { deployments } from "./deployments/index.js";
+import { App } from "./app.js";
 
-const app = express();
+const port = envVariables.PORT;
 
-app.get("/", (_, res) => {
-    res.status(400).send("Provide app name via the route!");
-});
-
-app.get("/khenzii-dev", (_, res) => {
-    // execute the script here..
-    res.status(200).send("OK");
-});
-
-app.listen(envVariables.PORT, () => {
-    console.log(`Server running at port ${envVariables.PORT}`);
-});
+new App(port, deployments);
 
