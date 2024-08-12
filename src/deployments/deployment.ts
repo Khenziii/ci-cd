@@ -1,30 +1,23 @@
 import { exec } from "child_process";
 import { DeploymentError } from "./errors.js";
 
-const execute_command = (command: string) => {
-    let command_stdout: string | undefined;
-    let successful: boolean = true;
-    
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.log(`A NodeJS error occurred while running the command! Error: ${error}`);
-            successful = false;
-            return;
-        }
+// Resolves into command's standard output (if no errors encountered).
+const execute_command = async (command: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        exec(command, (error, stdout, stderr) => {
+            if (error) {
+                reject(`A NodeJS error occurred while running the command! Error: ${error.message}`);
+                return;
+            }
 
-        if (stderr) {
-            console.log(`An error occurred while running the command! Error: ${stderr}`);
-            successful = false;
-            return;
-        }
+            if (stderr) {
+                reject(`An error occurred while running the command! Error: ${stderr}`);
+                return;
+            }
 
-        command_stdout = stdout;
-    });
-
-    return {
-        successful,
-        command_stdout,
-    };
+            resolve(stdout);
+        });
+    })
 }
 
 export class Deployment {
@@ -38,25 +31,27 @@ export class Deployment {
         this.fail_fast = fail_fast ?? true;
     }
 
-    public run() {
+    public async run() {
         console.log("Running the commands..");
 
         for (const command of this.commands_list) {
-            const { successful, command_stdout } = execute_command(command);
+            try {
+                console.log(`$ ${command}`);
 
-            if (!successful && this.fail_fast) {
+                const command_stdout = await execute_command(command);
+                if (!command_stdout) {
+                    continue;
+                }
+
+                const output_without_newline = command_stdout.trimEnd();
+                console.log(output_without_newline);
+            } catch (error) {
+                if (!this.fail_fast) continue;
+                
                 console.log("Aborting..");
-                throw new DeploymentError("Failed to deploy!");
+                throw new DeploymentError(`Failed to deploy! Error: ${(error as Error).message}`);
             }
-
-            console.log(`$ ${command}`);
-
-            if (!command_stdout) {
-                continue;
-            }
-
-            console.log(command_stdout);
-        };
+       }
 
         console.log("Successfully finished the deployment!")
     }

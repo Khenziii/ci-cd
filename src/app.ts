@@ -16,21 +16,16 @@ export class App {
         this.start();
     }
 
-    private setupRoutes() {
+    private async setupRoutes() {
         this.setupRootRoute();
 
         for (const deployment of this.deployments) {
-            this.app.get(deployment.route_name, (_, res) => {
-                try {
-                    deployment.run();
-                    res.status(200).json({
-                        message: "Success",
-                    });
-                } catch (_) {
-                    res.status(503).json({
-                        message: "Something went wrong while deploying..",
-                    });
-                }
+            this.app.get(deployment.route_name, async (_, res) => {
+                res.status(200).json({
+                    message: "Started the deployment!",
+                });
+
+                await deployment.run();
             });
         }
 
