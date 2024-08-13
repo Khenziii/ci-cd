@@ -6,12 +6,12 @@ const execute_command = async (command: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout, stderr) => {
             if (error) {
-                reject(`A NodeJS error occurred while running the command! Error: ${error.message}`);
+                reject(`A NodeJS error occurred while running the command: ${error.message}`);
                 return;
             }
 
             if (stderr) {
-                reject(`An error occurred while running the command! Error: ${stderr}`);
+                reject(`An error occurred while running the command: ${stderr}`);
                 return;
             }
 
@@ -49,7 +49,7 @@ export class Deployment {
                 if (!this.fail_fast) continue;
                 
                 console.log("Aborting..\n");
-                throw new DeploymentError(`Failed to deploy! Error: ${(error as Error).message}`);
+                throw new DeploymentError(error as string);
             }
        }
 

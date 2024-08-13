@@ -25,7 +25,11 @@ export class App {
                     message: "Started the deployment!",
                 });
 
-                await deployment.run();
+                try {
+                    await deployment.run();
+                } catch (error) {
+                    console.log(`Deployment failed: ${error}`);
+                }
             });
         }
 
