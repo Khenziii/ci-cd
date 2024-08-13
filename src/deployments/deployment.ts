@@ -32,7 +32,7 @@ export class Deployment {
     }
 
     public async run() {
-        console.log("Running the commands..");
+        console.log(`🚀 Starting the deployment of ${this.route_name} app`);
 
         for (const command of this.commands_list) {
             try {
@@ -48,12 +48,12 @@ export class Deployment {
             } catch (error) {
                 if (!this.fail_fast) continue;
                 
-                console.log("Aborting..");
+                console.log("Aborting..\n");
                 throw new DeploymentError(`Failed to deploy! Error: ${(error as Error).message}`);
             }
        }
 
-        console.log("Successfully finished the deployment!")
+        console.log("Successfully finished the deployment!\n")
     }
 }
 

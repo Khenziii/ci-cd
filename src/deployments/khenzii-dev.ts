@@ -5,7 +5,7 @@ const commands_list: string[] = [
     "echo 'hello world!'",
     "notify-send 'hello!'",
 ];
-const route_name: string = "/khenzii-dev";
+const route_name: string = "khenzii-dev";
 
 export const khenziiDevDeployment = new Deployment(commands_list, route_name);
 

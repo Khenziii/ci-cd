@@ -20,7 +20,7 @@ export class App {
         this.setupRootRoute();
 
         for (const deployment of this.deployments) {
-            this.app.get(deployment.route_name, async (_, res) => {
+            this.app.get(`/${deployment.route_name}`, async (_, res) => {
                 res.status(200).json({
                     message: "Started the deployment!",
                 });
@@ -50,7 +50,7 @@ export class App {
 
     private start() {
         this.app.listen(this.port, () => {
-            console.log(`Server running on port: ${this.port}`) 
+            console.log(`Server running on port: ${this.port}\n`) 
         });
     }
 }
