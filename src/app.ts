@@ -32,6 +32,12 @@ export class App {
                 }
             });
         }
+        
+        this.app.get("/test", (_, res) => {
+            res.status(200).json({
+                message: "I'm a test!",
+            });
+        });
 
         this.setupNotFoundRoute();
     }
