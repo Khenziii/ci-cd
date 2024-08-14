@@ -2,6 +2,7 @@ import { Deployment } from "./deployment.js";
 
 const commands_list: string[] = [
     "cd ~/ci-cd",
+    "git pull",
     "npm install",
     "npm run build",
     "pm2 restart ci-cd",

@@ -1,0 +1,36 @@
+name: "Deployment"
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  deployment:
+    name: 🚀 GCP Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # This step creates a new deployment, check them out here:
+      # https://github.com/Khenziii/ci-cd/deployments
+      - name: Start Deployment
+        uses: bobheadxi/deployments@v1
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.TOKEN_GITHUB }}
+          env: Production
+
+      - name: Trigger Deployment Webhook
+        run: |
+          curl "${{ secrets.DEPLOY_WEBHOOK_URL }}"
+
+      - name: Update Deployment Status
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.TOKEN_GITHUB }}
+          status: ${{ job.status }}
+          env: ${{ steps.deployment.outputs.env }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
