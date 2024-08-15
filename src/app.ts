@@ -3,11 +3,13 @@ import { Deployment } from "./deployments/deployment.js";
 
 export class App {
     port: number;
+    secret: string;
     deployments: Deployment[];
     app: Express;
 
-    constructor(port: number, deployments: Deployment[]) {
+    constructor(port: number, secret: string, deployments: Deployment[]) {
         this.port = port;
+        this.secret = secret;
         this.deployments = deployments;
 
         this.app = express();
