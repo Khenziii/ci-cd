@@ -3,11 +3,13 @@ import { Deployment } from "./deployments/deployment.js";
 
 export class App {
     port: number;
+    secret: string;
     deployments: Deployment[];
     app: Express;
 
-    constructor(port: number, deployments: Deployment[]) {
+    constructor(port: number, secret: string, deployments: Deployment[]) {
         this.port = port;
+        this.secret = secret;
         this.deployments = deployments;
 
         this.app = express();
@@ -20,7 +22,24 @@ export class App {
         this.setupRootRoute();
 
         for (const deployment of this.deployments) {
-            this.app.get(`/${deployment.route_name}`, async (_, res) => {
+            this.app.get(`/${deployment.route_name}`, async (req, res) => {
+                const { secret } = req.query;
+
+                if (!secret) {
+                    const fullUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+                    res.status(401).json({
+                        message: `This endpoint should be accessed like this: ${fullUrl}?secret=<your_secret>. Include the secret in a query parameter.`,
+                    });
+                    return;
+                }
+
+                if (secret != this.secret) {
+                    res.status(401).json({
+                        message: "Invalid secret!",
+                    });
+                    return;
+                }
+        
                 res.status(200).json({
                     message: "Started the deployment!",
                 });
