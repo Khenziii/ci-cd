@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon --ext 'ts' --exec 'yarn build && yarn start'"
+    "dev": "nodemon --ext 'ts' --exec 'yarn build && yarn start'",
+    "test": "jest"
   },
   "type": "module",
   "author": "Khenzii",
@@ -20,6 +21,7 @@
     "jest": "^29.7.0",
     "nodemon": "^3.1.4",
     "supertest": "^7.0.0",
+    "ts-jest": "^29.2.4",
     "typescript": "^5.5.4"
   }
 }
