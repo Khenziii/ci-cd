@@ -3,7 +3,7 @@ import { Deployment } from "./deployment.js";
 const commands_list: string[] = [
     "cd ~/ci-cd",
     "git pull",
-    "yarn install --frozen-lockfile",
+    "yarn install --immutable",
     "yarn build",
     "pm2 restart ci-cd",
 ];
