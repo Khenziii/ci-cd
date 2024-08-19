@@ -7,5 +7,9 @@ describe("Main App", () => {
         const res = await request(ciCd.app).get("/not_found");
         expect(JSON.parse(res.text)["message"]).toEqual("This deployment doesn't exist!");
     })
+    
+    afterAll(async () => {
+        await ciCd.stop();
+    })
 })
 

@@ -1,4 +1,5 @@
 import express, { Express } from "express";
+import { Server } from "http";
 import { Deployment } from "./deployments/deployment";
 
 export class App {
@@ -6,6 +7,7 @@ export class App {
     secret: string;
     deployments: Deployment[];
     app: Express;
+    server?: Server;
 
     constructor(port: number, secret: string, deployments: Deployment[]) {
         this.port = port;
@@ -72,9 +74,21 @@ export class App {
     }
 
     private start() {
-        this.app.listen(this.port, () => {
+        this.server = this.app.listen(this.port, () => {
             console.log(`Server running on port: ${this.port}\n`) 
         });
+    }
+
+    public async stop() {
+        return new Promise<void>((resolve) => {
+            if (this.server === undefined) return;
+
+            this.server.close(() => {
+                console.log(`Shutting down server that has been running on port ${this.port}..`)
+
+                resolve();
+            })
+        })
     }
 }
 
