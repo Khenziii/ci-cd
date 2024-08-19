@@ -5,5 +5,5 @@ import { App } from "./app";
 const port = envVariables.PORT;
 const secret = envVariables.SECRET;
 
-new App(port, secret, deployments);
+export const ciCd = new App(port, secret, deployments);
 
