@@ -13,8 +13,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Environment
-        uses: ./.github/actions/env-setup
+      - name: Install Dependencies
+        run: yarn install
 
       - name: Run Tests
         run: yarn test
@@ -27,8 +27,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Environment
-        uses: ./.github/actions/env-setup
+      - name: Install Dependencies
+        run: yarn install
 
       - name: Build
         run: yarn build
