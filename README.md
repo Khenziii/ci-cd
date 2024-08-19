@@ -23,8 +23,8 @@ Choosing the right PaaS is basically considering how much you're willing to pay 
 ## Entering the development environment
 
 ```shell
-$ npm install
-$ npm run build
-$ npm run start
+$ yarn install
+$ yarn build
+$ yarn start
 ```
 
