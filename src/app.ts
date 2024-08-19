@@ -2,17 +2,24 @@ import express, { Express } from "express";
 import { Server } from "http";
 import { Deployment } from "./deployments/deployment";
 
+export type environment = 
+    "production"
+    | "development"
+    | "tests";
+
 export class App {
     port: number;
     secret: string;
     deployments: Deployment[];
     app: Express;
+    env: environment;
     server?: Server;
 
-    constructor(port: number, secret: string, deployments: Deployment[]) {
+    constructor(port: number, secret: string, deployments: Deployment[], env: environment) {
         this.port = port;
         this.secret = secret;
         this.deployments = deployments;
+        this.env = env;
 
         this.app = express();
 
@@ -46,6 +53,8 @@ export class App {
                     message: "Started the deployment!",
                 });
 
+                if (this.env === "tests") return;
+                
                 try {
                     await deployment.run();
                 } catch (error) {

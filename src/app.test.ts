@@ -6,11 +6,11 @@ import { Deployment } from "./deployments/deployment";
 const secret: string = "test-secret";
 const deployments: Deployment[] = [
     new Deployment(
-        ["echo 'I'm a test!'"],
+        [`echo "I'm a test!"`],
         "/test-deployment",
     ),
 ];
-const ciCd: App = new App(3000, secret, deployments);
+const ciCd: App = new App(3000, secret, deployments, "tests");
 
 describe("Main App", () => {
     it("Should show an 404 error after requesting a non-existent route", async () => {
@@ -39,6 +39,13 @@ describe("Main App", () => {
 
         expect(JSON.parse(res.text)["message"]).toMatch("Invalid secret!");
         expect(res.statusCode).toEqual(401);
+    });
+
+    it("Should show an success message if using the correct secret", async () => {
+        const res = await request(ciCd.app).get(`/${deployments[0].route_name}?secret=${secret}`);
+
+        expect(JSON.parse(res.text)["message"]).toMatch("Started the deployment!");
+        expect(res.statusCode).toEqual(200);
     });
 
     afterAll(async () => {
