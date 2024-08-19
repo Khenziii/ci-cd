@@ -4,14 +4,9 @@ import { DeploymentError } from "./errors";
 // Resolves into command's standard output (if no errors encountered).
 export const execute_command = async (command: string): Promise<string> => {
     return new Promise((resolve, reject) => {
-        exec(command, (error, stdout, stderr) => {
+        exec(command, (error, stdout) => {
             if (error) {
-                reject(`A NodeJS error occurred while running the command: ${error.message}`);
-                return;
-            }
-
-            if (stderr) {
-                reject(`An error occurred while running the command: ${stderr}`);
+                reject(`A error occurred while running the command: ${error.message}`);
                 return;
             }
 
