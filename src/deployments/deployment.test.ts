@@ -17,6 +17,14 @@ const validDeployment: Deployment = new Deployment(
     ],
     "valid-deployment",
 );
+const invalidDeployment: Deployment = new Deployment(
+    [
+        `false`,
+        `false`,
+    ],
+    "invalid-deployment",
+    false,
+)
 
 describe("Deployments", () => {
     it("Should resolve a valid command into it's standard output", async () => {
@@ -34,6 +42,10 @@ describe("Deployments", () => {
 
     it("A valid deployment should succeed", async () => {
         await validDeployment.run();
+    });
+
+    it("A deployment with `fail_fast` set to false should execute every command (without throwing an error), even if some of them are invalid", async () => {
+        await invalidDeployment.run();
     });
 });
 
