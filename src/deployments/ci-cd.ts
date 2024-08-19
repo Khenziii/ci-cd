@@ -1,4 +1,4 @@
-import { Deployment } from "./deployment.js";
+import { Deployment } from "./deployment";
 
 const commands_list: string[] = [
     "cd ~/ci-cd",

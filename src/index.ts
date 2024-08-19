@@ -1,9 +1,10 @@
-import { envVariables } from "./env-variables.js";
-import { deployments } from "./deployments/index.js";
-import { App } from "./app.js";
+import { envVariables } from "./env-variables";
+import { deployments } from "./deployments";
+import { App } from "./app";
 
 const port = envVariables.PORT;
 const secret = envVariables.SECRET;
+const environment = envVariables.ENVIRONMENT;
 
-new App(port, secret, deployments);
+export const ciCd = new App(port, secret, deployments, environment);
 
