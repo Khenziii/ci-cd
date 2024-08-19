@@ -1,0 +1,35 @@
+name: "Checks"
+on:
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  tests-check:
+    name: 🧐 Tests Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Environment
+        uses: ./.github/actions/env-setup
+
+      - name: Run Tests
+        run: yarn test
+
+  build-check:
+    name: 🗿 Build Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Environment
+        uses: ./.github/actions/env-setup
+
+      - name: Build
+        run: yarn build
+
