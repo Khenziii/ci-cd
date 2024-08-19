@@ -2,7 +2,7 @@ import { exec } from "child_process";
 import { DeploymentError } from "./errors";
 
 // Resolves into command's standard output (if no errors encountered).
-const execute_command = async (command: string): Promise<string> => {
+export const execute_command = async (command: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout, stderr) => {
             if (error) {
