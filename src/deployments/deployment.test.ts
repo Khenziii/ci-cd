@@ -8,7 +8,14 @@ const partiallyInvalidDeployment: Deployment = new Deployment(
         `echo "I'm a valid command, that shouldn't be reached"`,
     ],
     "partially-invalid-deployment",
-    true,
+);
+const validDeployment: Deployment = new Deployment(
+    [
+        `echo "I'm a working command!"`,
+        `echo "I work too!"`,
+        `# I'm a command, that doesn't output anything, but works fine`,
+    ],
+    "valid-deployment",
 );
 
 describe("Deployments", () => {
@@ -23,6 +30,10 @@ describe("Deployments", () => {
 
     it("A whole deployment should fail if an invalid command encountered, and `fail_fast` is set to true", async () => {
         await expect(partiallyInvalidDeployment.run()).rejects.toThrow(DeploymentError);
-    })
+    });
+
+    it("A valid deployment should succeed", async () => {
+        await validDeployment.run();
+    });
 });
 
