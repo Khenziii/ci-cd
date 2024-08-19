@@ -24,7 +24,12 @@ Choosing the right PaaS is basically considering how much you're willing to pay 
 
 ```shell
 $ yarn install
-$ yarn build
-$ yarn start
+$ yarn dev
+```
+
+### Running tests
+
+```shell
+$ yarn test
 ```
 
