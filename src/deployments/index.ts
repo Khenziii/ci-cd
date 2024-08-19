@@ -1,5 +1,5 @@
-import { khenziiDevDeployment } from "./khenzii-dev.js";
-import { ciCdDeployment } from "./ci-cd.js";
+import { khenziiDevDeployment } from "./khenzii-dev";
+import { ciCdDeployment } from "./ci-cd";
 
 export const deployments = [
     khenziiDevDeployment,

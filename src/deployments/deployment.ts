@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import { DeploymentError } from "./errors.js";
+import { DeploymentError } from "./errors";
 
 // Resolves into command's standard output (if no errors encountered).
 const execute_command = async (command: string): Promise<string> => {

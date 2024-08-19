@@ -10,6 +10,10 @@
     "baseUrl": ".",
     "moduleResolution": "node"
   },
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "verbose": false
+  },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }

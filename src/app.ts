@@ -1,5 +1,5 @@
 import express, { Express } from "express";
-import { Deployment } from "./deployments/deployment.js";
+import { Deployment } from "./deployments/deployment";
 
 export class App {
     port: number;
